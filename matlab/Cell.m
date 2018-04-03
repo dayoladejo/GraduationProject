@@ -7,23 +7,26 @@ classdef Cell
     
     properties(SetAccess = private)
         Id=0;
-        xaxis=0;
-        yaxis=0;
+        xaxis=0;%cluster 
+        yaxis=0;%cluster
         range=0;  % the radius of BS
         Resources_Block=0;
+        type=0;%0->macro,1->femto
+        ArrayOfFemtos=0;
     end
     
     methods
-        function obj = Cell(xaxis,yaxis,range,Resources_Blocks)
+        function obj = Cell(xaxis,yaxis,range,Resources_Blocks,type,ArrayOfFemtos)
             obj.Id = Cell.counter;
             if nargin>0
             obj.xaxis=xaxis;
             obj.yaxis=yaxis;
             obj.range=range;
             obj.Resources_Block=Resources_Blocks;
+            obj.type=type;
+            obj.ArrayOfFemtos=ArrayOfFemtos;
             end
         end
-        
     end
     methods(Static)
         function count = counter
