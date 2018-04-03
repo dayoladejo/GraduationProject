@@ -2,9 +2,6 @@ function [AllClusters,AllMacroCells] = SetUpClusters(outer_radius_Macro,I,J,colo
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 %%pre calculation
-%% tipical values (I,J)==>(0,1),(1,0),(1,1),(0,2),(1,2),(2,1),(2,2),(0,3),(3,0),(1,3),(3,1),(2,3),(3,2),(3,3),(3,4),(4,5),(5,4)
-I=1;
-J=0;
 %% pre-calculations
 switch NumberOfClusters
     case num2cell(38:61)
@@ -38,7 +35,7 @@ switch NumberOfCellsInCluster
     case 16
         XchangesMacroCells([14,19,15,18,16,17])=XchangesMacroCells([19,14,18,15,17,16]);
         YchangesMacroCells([14,19,15,18,16,17])=YchangesMacroCells([19,14,18,15,17,16]);
-     
+        
 end
 
 XchangesCluster=0;
@@ -73,9 +70,9 @@ end
 for i=1:NumberOfResourcesBlocks
     All_Resources_Blocks(i)=Resources_Block(All_channels(((i-1)*num_of_Channels_in_Resources_Block)+1:(i*num_of_Channels_in_Resources_Block)),color(i,:));
 end
- for i=1:NumOfFemtos
-         AllFemtoCells(i)=Cell(XchangesFemtoCells(i),YchangesFemtoCells(i),outer_radius_Femto,All_Resources_Blocks(NumberOfCellsInCluster+i),1,0);
- end
+for i=1:NumOfFemtos
+    AllFemtoCells(i)=Cell(XchangesFemtoCells(i),YchangesFemtoCells(i),outer_radius_Femto,All_Resources_Blocks(NumberOfCellsInCluster+i),1,0);
+end
 for k=1:NumberOfCellsInCluster
     AllMacroCells(k)=Cell(XchangesMacroCells(k),YchangesMacroCells(k),outer_radius_Macro,All_Resources_Blocks(k+NumOfFemtos),0,AllFemtoCells);
 end

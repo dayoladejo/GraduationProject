@@ -13,6 +13,9 @@ classdef Cell
         Resources_Block=0;
         type=0;%0->macro,1->femto
         ArrayOfFemtos=0;
+        Pt=0;
+        Gt=0;
+        
     end
     
     methods
