@@ -1,4 +1,4 @@
-function [AllClusters,AllMacroCells] = SetUpClusters(outer_radius_Macro,I,J,color,NumberOfClusters,Frequency_Range,Channel_Bandwidth,X,Y,NumOfFemtos,outer_radius_Femto)
+function [AllClusters,AllMacroCells] = SetUpClusters(outer_radius_Macro,I,J,color,NumberOfClusters,Frequency_Range,Channel_Bandwidth,X,Y,NumOfFemtos,outer_radius_Femto,overLap_femto,inner_radius_empty_ratio)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 %%pre calculation
@@ -60,8 +60,9 @@ for i=1:ClustersLevels
         YchangesCluster=cat(2,YchangesCluster,(i-3)*circshift(YshiftCluster,1)+(i-1)*YshiftCluster,(i-1)*circshift(YshiftCluster,1)+(i-3)*YshiftCluster,(i-2)*circshift(YshiftCluster,1)+(i-2)*YshiftCluster);
     end
 end
-XchangesFemtoCells=[outer_radius_Macro/2,   -outer_radius_Macro/2,  -outer_radius_Macro/2,    outer_radius_Macro/2];
-YchangesFemtoCells=[inner_radius_Macro/2,   inner_radius_Macro/2,   -inner_radius_Macro/2,    -inner_radius_Macro/2];
+%XchangesFemtoCells=[outer_radius_Macro/2,   -outer_radius_Macro/2,  -outer_radius_Macro/2,    outer_radius_Macro/2];
+%YchangesFemtoCells=[inner_radius_Macro/2,   inner_radius_Macro/2,   -inner_radius_Macro/2,    -inner_radius_Macro/2];
+[XchangesFemtoCells,YchangesFemtoCells]=rand_circ(NumOfFemtos,0,0,inner_radius_Macro,inner_radius_Macro*inner_radius_empty_ratio,outer_radius_Femto,overLap_femto);
 NumberOfResourcesBlocks=NumberOfCellsInCluster+NumOfFemtos;
 %% evaluation section
 for i=1:num_Of_available_Channels
