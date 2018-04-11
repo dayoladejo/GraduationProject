@@ -73,7 +73,7 @@ end
 k=1;
 NumberOfReuseFemto=0;
 for i=1:NumOfFemtos
-    if(k==Cell.Max_Number_of_FemtoCells)
+    if(k>Cell.Max_Number_of_FemtoCells)
         k=1;
         NumberOfReuseFemto=NumberOfReuseFemto+1;
     end

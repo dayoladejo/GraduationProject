@@ -14,8 +14,11 @@ classdef Cell
             lamda_macro=(3*10^8)/Cell.Center_Freq_macro;
             lamda_femto=(3*10^8)/Cell.Center_Freq_femto;
             Max_Number_of_FemtoCells=10;
+            alpha=2;
+            TherminalNoise_dBm=-110
+            TherminalNoise=(10^(Cell.TherminalNoise_dBm/10))*0.001;
     end
-    properties(SetAccess = private)
+    properties(SetAccess = public)
         Id=0;
         xaxis=0;%cluster 
         yaxis=0;%cluster

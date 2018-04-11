@@ -10,7 +10,9 @@ classdef User
         Id=0;
         xaxis=0;
         yaxis=0;
-        AllPossibleCells=[];        
+        AllPossibleCells=[];
+        ResourceBlock_Ids_AllPossibleCells=0;
+        OtherCells=0;
     end
     
  methods

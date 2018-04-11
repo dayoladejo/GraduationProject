@@ -2,7 +2,7 @@ classdef Cluster
     %UNTITLED4 Summary of this class goes here
     %   Detailed explanation goes here
     
-    properties(SetAccess = private)
+    properties(SetAccess = public)
         Id=0;
         NumberOfCells=0;
         xaxis=0;
