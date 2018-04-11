@@ -1,13 +1,16 @@
 classdef User
     %UNTITLED2 Summary of this class goes here
     %   Detailed explanation goes here
+     properties (Constant)
+            Gr=1;
+            MinPower_Recive_dbm=-80;
+            MinPower_Recive_Watt=(10^(User.MinPower_Recive_dbm/10))*0.001;
+    end
     properties (SetAccess = public)
         Id=0;
         xaxis=0;
         yaxis=0;
-        AllPossibleCells=[];
-        Gr=0;
-        
+        AllPossibleCells=[];        
     end
     
  methods

@@ -60,10 +60,9 @@ for i=1:ClustersLevels
         YchangesCluster=cat(2,YchangesCluster,(i-3)*circshift(YshiftCluster,1)+(i-1)*YshiftCluster,(i-1)*circshift(YshiftCluster,1)+(i-3)*YshiftCluster,(i-2)*circshift(YshiftCluster,1)+(i-2)*YshiftCluster);
     end
 end
-%XchangesFemtoCells=[outer_radius_Macro/2,   -outer_radius_Macro/2,  -outer_radius_Macro/2,    outer_radius_Macro/2];
-%YchangesFemtoCells=[inner_radius_Macro/2,   inner_radius_Macro/2,   -inner_radius_Macro/2,    -inner_radius_Macro/2];
+
 [XchangesFemtoCells,YchangesFemtoCells]=rand_circ(NumOfFemtos,0,0,inner_radius_Macro,inner_radius_Macro*inner_radius_empty_ratio,outer_radius_Femto,overLap_femto);
-NumberOfResourcesBlocks=NumberOfCellsInCluster+NumOfFemtos;
+NumberOfResourcesBlocks=NumberOfCellsInCluster+min(NumOfFemtos,Cell.Max_Number_of_FemtoCells);
 %% evaluation section
 for i=1:num_Of_available_Channels
     All_channels(i)=Channel(Frequency_Range(1)+(i-1)*Channel_Bandwidth,Channel_Bandwidth);
@@ -71,11 +70,18 @@ end
 for i=1:NumberOfResourcesBlocks
     All_Resources_Blocks(i)=Resources_Block(All_channels(((i-1)*num_of_Channels_in_Resources_Block)+1:(i*num_of_Channels_in_Resources_Block)),color(i,:));
 end
+k=1;
+NumberOfReuseFemto=0;
 for i=1:NumOfFemtos
-    AllFemtoCells(i)=Cell(XchangesFemtoCells(i),YchangesFemtoCells(i),outer_radius_Femto,All_Resources_Blocks(NumberOfCellsInCluster+i),1,0);
+    if(k==Cell.Max_Number_of_FemtoCells)
+        k=1;
+        NumberOfReuseFemto=NumberOfReuseFemto+1;
+    end
+    AllFemtoCells(i)=Cell(XchangesFemtoCells(i),YchangesFemtoCells(i),outer_radius_Femto,All_Resources_Blocks(k),1,0);
+    k=k+1;
 end
 for k=1:NumberOfCellsInCluster
-    AllMacroCells(k)=Cell(XchangesMacroCells(k),YchangesMacroCells(k),outer_radius_Macro,All_Resources_Blocks(k+NumOfFemtos),0,AllFemtoCells);
+    AllMacroCells(k)=Cell(XchangesMacroCells(k),YchangesMacroCells(k),outer_radius_Macro,All_Resources_Blocks(k+min(NumOfFemtos,Cell.Max_Number_of_FemtoCells)),0,AllFemtoCells);
 end
 
 whitebg([0 0 0]),hold on;

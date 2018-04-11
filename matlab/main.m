@@ -1,23 +1,25 @@
 %% input Section
 clear all;
+close all;
 %inputs:
+Alpha=2;
 NumberOfClusters=1;%max number =61
-Frequency_Range=[100000,200000];%[min frequency ,max frequency]
-Channel_Bandwidth=10;
-Area=100000*100000; %m2
-outer_radius_Macro=1000; %m cell outer radius
-outer_radius_Femto=100;
+Frequency_Range=[1*10^9,100*10^9];%[min frequency ,max frequency]
+Channel_Bandwidth=10*10^7;
+Area=90*90; %m2
+outer_radius_Macro=Calculate_Max_Radius('macro',Alpha); %m cell outer radius
+outer_radius_Femto=Calculate_Max_Radius('femto',Alpha);
+Area_Of_Macro=3*sqrt(3)*outer_radius_Macro/2;
+[I,J]=Determine_I_J(Area,Area_Of_Macro);
 X=5000;
 Y=5000;
 Number_Of_Users=500;
 ChannelsID=0;
 ColorStep=0.2;
-overLap_femto=0.5;
-Number_Of_Femtos=30;
+overLap_femto=0.1;
+Number_Of_Femtos=17;
 inner_radius_empty_ratio=0.2;
-%% tipical values (I,J)==>(0,1),(1,0),(1,1),(0,2),(1,2),(2,1),(2,2),(0,3),(3,0),(1,3),(3,1),(2,3),(3,2),(3,3),(3,4),(4,5),(5,4)
-I=1;
-J=1;
+
 %% pre-calculations
 color=[];
 for i=1:-ColorStep:0
@@ -39,7 +41,7 @@ switch NumberOfClusters
 end
 
 %% Evaluation Section
-Users=AddAllUsers(Number_Of_Users,X+(ClustersLevels)*outer_radius_Macro,X-(ClustersLevels)*outer_radius_Macro);
+Users=AddAllUsers(Number_Of_Users,X+1.5*outer_radius_Macro,X-2.5*outer_radius_Macro);
 [AllClusters,AllMacroCells]=SetUpClusters(outer_radius_Macro,I,J,color,NumberOfClusters,Frequency_Range,Channel_Bandwidth,X,Y,Number_Of_Femtos,outer_radius_Femto,overLap_femto,inner_radius_empty_ratio);
 for i=1:Number_Of_Users
     user=Users(i);

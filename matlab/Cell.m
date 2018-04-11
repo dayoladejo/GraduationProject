@@ -4,7 +4,17 @@ classdef Cell
     %properties(Constant)
     %    MaxRadius=1000;
     % end
-    
+    properties (Constant)
+            Gt_macro=1;
+            Gt_femto=1;
+            Center_Freq_macro=6*10^9;
+            Center_Freq_femto=30*10^9;
+            Pt_macro=1;
+            Pt_femto=0.15;
+            lamda_macro=(3*10^8)/Cell.Center_Freq_macro;
+            lamda_femto=(3*10^8)/Cell.Center_Freq_femto;
+            Max_Number_of_FemtoCells=10;
+    end
     properties(SetAccess = private)
         Id=0;
         xaxis=0;%cluster 
@@ -13,9 +23,6 @@ classdef Cell
         Resources_Block=0;
         type=0;%0->macro,1->femto
         ArrayOfFemtos=0;
-        Pt=0;
-        Gt=0;
-        
     end
     
     methods
