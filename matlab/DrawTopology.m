@@ -1,7 +1,8 @@
-function DrawTopology(AllClusters,AllMacroCells,Users)
+function DrawTopology(AllClusters,AllMacroCells,Users,AllCellsArray)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 %% conatants:
+drawLines=1;
 LineWidthCells=4;
 LineWidthpoints=2;
 %% evaluation
@@ -18,7 +19,7 @@ for z=1:length(AllClusters)
 %     DrawHexagon(AllMacroCells(1).xaxis+AllClusters(z).xaxis , AllMacroCells(1).yaxis+AllClusters(z).yaxis , AllMacroCells(1).range,AllMacroCells(1).Resources_Block.color,LineWidthCells);
     
 end
-DrawUsers(Users);
+DrawUsers(Users,AllCellsArray,drawLines);
 grid on, grid minor;
 axis([-inf inf -inf inf]);
 pbaspect([1 1 1]);

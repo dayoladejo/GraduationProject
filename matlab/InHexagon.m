@@ -1,9 +1,9 @@
-function in = InHexagon(X,Y,Cell,User)
+function in = InHexagon(X,Y,Cell,User,additionPersentage)
 %UNTITLED7 Summary of this function goes here
 %   Detailed explanation goes here
 L = linspace(0,2*pi,7);
-xv = X+Cell.range*cos(L)';
-yv = Y+Cell.range*sin(L)';
+xv = X+(Cell.range*(1+additionPersentage))*cos(L)';
+yv = Y+(Cell.range*(1+additionPersentage))*sin(L)';
 xq=User.xaxis;
 yq=User.yaxis;
 in = inpolygon(xq,yq,xv,yv);

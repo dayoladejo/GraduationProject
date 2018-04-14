@@ -1,4 +1,4 @@
-function [AllClusters,AllMacroCells] = SetUpClusters(outer_radius_Macro,I,J,color,NumberOfClusters,Frequency_Range,Channel_Bandwidth,X,Y,NumOfFemtos,outer_radius_Femto,overLap_femto,inner_radius_empty_ratio)
+function [AllClusters,AllMacroCells,AllCellsArray] = SetUpClusters(outer_radius_Macro,I,J,color,NumberOfClusters,Frequency_Range,Channel_Bandwidth,X,Y,NumOfFemtos,outer_radius_Femto,overLap_femto,inner_radius_empty_ratio)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 %%pre calculation
@@ -89,5 +89,29 @@ set(gcf,'color','k');
 for K=1:NumberOfClusters
     AllClusters(K)=Cluster(I,J,X+XchangesCluster(K),Y+YchangesCluster(K),AllMacroCells);
 end
+
+AllCellsArray=[];
+for i=1:NumberOfClusters
+    cluster=AllClusters(i);
+    for j=1:NumberOfCellsInCluster
+        macroCell=AllMacroCells(j);
+        if(isempty(AllCellsArray))
+            index=1;
+        else
+            index=length(AllCellsArray(1,:))+1;
+        end
+        AllCellsArray(:,index)=[cluster.Id ; macroCell.Id ; -1 ;cluster.xaxis+macroCell.xaxis;cluster.yaxis+macroCell.yaxis;macroCell.Resources_Block.Id];
+        for k=1:NumOfFemtos
+            femtoCell=AllFemtoCells(k);
+            if(isempty(AllCellsArray))
+                index=1;
+            else
+                index=length(AllCellsArray(1,:))+1;
+            end
+            AllCellsArray(:,index)=[cluster.Id ; macroCell.Id ; femtoCell.Id ;cluster.xaxis+macroCell.xaxis+femtoCell.xaxis;cluster.yaxis+macroCell.yaxis+femtoCell.yaxis;femtoCell.Resources_Block.Id];
+        end
+    end
+end
+
 end
 

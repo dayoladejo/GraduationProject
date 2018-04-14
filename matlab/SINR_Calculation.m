@@ -1,4 +1,4 @@
-function [Allusers,x] = SINR_Calculation(users,AllClusters)
+function [Allusers,x] = SINR_Calculation(users,AllCellsArray)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -6,7 +6,9 @@ for i=1:length(users)
     user=users(i);
     if(~isempty(user.AllPossibleCells))
         for k=1:length(user.AllPossibleCells(1,:))
-            [x,y]=getCellCoordinates(AllClusters,user.AllPossibleCells(:,k));
+            Array=FindCell(AllCellsArray,user.AllPossibleCells(:,k));
+            x=Array(4);
+            y=Array(5);
             D=sqrt((user.xaxis-x)^2+(user.yaxis-y)^2);
             users(i).AllPossibleCells(4,k)=D;
         end
@@ -18,7 +20,8 @@ for i=1:length(users)
     else
         for k=1:length(user.AllPossibleCells(1,:))
             cellConnecting_to=user.AllPossibleCells(:,k);
-            x=GetAllCellsIds_ByResourceBlockId(AllClusters,user.ResourceBlock_Ids_AllPossibleCells(k),user);
+            x=FindAllCellsIdsAndDistance_ByResourceBlockId(AllCellsArray,user.ResourceBlock_Ids_AllPossibleCells(k),user);
+            %x=GetAllCellsIds_ByResourceBlockId(AllClusters,user.ResourceBlock_Ids_AllPossibleCells(k),user);
             SINR=0;
             Pi=0;
             if(x~=0)
@@ -46,8 +49,16 @@ for i=1:length(users)
                 SINR=Pr/(Pi+Cell.TherminalNoise);
             end
             user.AllPossibleCells(5,k)=SINR;
-            
         end
+        [maxval,index]=max(user.AllPossibleCells(5,:));
+        user.CellConnectingTo=user.AllPossibleCells(1:3,index);
+        if(user.CellConnectingTo(3)==-1)
+            user.Type=0;
+        else
+            user.Type=1;
+        end
+        user.SINR=maxval;
+        user.powerRecived=user.AllPossibleCells(4,index);
     end
     users(i)=user;
 end

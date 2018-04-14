@@ -13,6 +13,10 @@ classdef User
         AllPossibleCells=[];
         ResourceBlock_Ids_AllPossibleCells=0;
         OtherCells=0;
+        CellConnectingTo=0;
+        Type=-1;
+        SINR=0;
+        powerRecived=0;
     end
     
  methods
