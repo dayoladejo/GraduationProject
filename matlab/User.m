@@ -11,7 +11,7 @@ classdef User
         xaxis=0;
         yaxis=0;
         AllPossibleCells=[];
-        ResourceBlock_Ids_AllPossibleCells=0;
+        ResourceBlock_Ids_AllPossibleCells=[];
         OtherCells=0;
         CellConnectingTo=0;
         Type=-1;

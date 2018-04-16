@@ -1,4 +1,4 @@
-function [Allusers,x] = SINR_Calculation(users,AllCellsArray)
+function Allusers = SINR_Calculation(users,AllCellsArray)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 
