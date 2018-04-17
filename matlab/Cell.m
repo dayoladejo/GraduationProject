@@ -10,7 +10,7 @@ classdef Cell
             Center_Freq_macro=6*10^9;
             Center_Freq_femto=30*10^9;
             Pt_macro=1;
-            Pt_femto=0.15;
+            Pt_femto=0.7;
             lamda_macro=(3*10^8)/Cell.Center_Freq_macro;
             lamda_femto=(3*10^8)/Cell.Center_Freq_femto;
             Max_Number_of_FemtoCells=10;

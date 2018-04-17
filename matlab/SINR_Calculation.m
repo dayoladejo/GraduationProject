@@ -1,4 +1,4 @@
-function Allusers = SINR_Calculation(users,AllCellsArray)
+function [Allusers,Temp] = SINR_Calculation(users,AllCellsArray)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -6,7 +6,7 @@ for i=1:length(users)
     user=users(i);
     if(~isempty(user.AllPossibleCells))
         for k=1:length(user.AllPossibleCells(1,:))
-            Array=FindCell(AllCellsArray,user.AllPossibleCells(:,k));
+            [Array,index]=FindCell(AllCellsArray,user.AllPossibleCells(:,k));
             x=Array(4);
             y=Array(5);
             D=sqrt((user.xaxis-x)^2+(user.yaxis-y)^2);
@@ -14,6 +14,13 @@ for i=1:length(users)
         end
     end
 end
+Keys={'NumberOfUsers','UsersIds'};
+Values={0,[]};
+Temp={};
+for i=1:length(AllCellsArray)
+    Temp{i}=containers.Map(Keys,Values);
+end
+
 for i=1:length(users)
     user=users(i);
     if(isempty(user.AllPossibleCells))
@@ -21,7 +28,6 @@ for i=1:length(users)
         for k=1:length(user.AllPossibleCells(1,:))
             cellConnecting_to=user.AllPossibleCells(:,k);
             x=FindAllCellsIdsAndDistance_ByResourceBlockId(AllCellsArray,user.ResourceBlock_Ids_AllPossibleCells(k),user);
-            %x=GetAllCellsIds_ByResourceBlockId(AllClusters,user.ResourceBlock_Ids_AllPossibleCells(k),user);
             SINR=0;
             Pi=0;
             if(x~=0)
@@ -50,8 +56,18 @@ for i=1:length(users)
             end
             user.AllPossibleCells(5,k)=SINR;
         end
-        [maxval,index]=max(user.AllPossibleCells(5,:));
+        ComparisonArray=user.AllPossibleCells(5,:);
+        for k=1:length(ComparisonArray)
+             [CellIds,IndexOfCell]=FindCell(AllCellsArray,user.AllPossibleCells(1:3,k));
+             NumOfUsersConnecting=Temp{IndexOfCell}('NumberOfUsers');
+             ComparisonArray(k)=ComparisonArray(k)/(NumOfUsersConnecting+1);
+        end
+        [maxval,index]=max(ComparisonArray);
+%         [maxval,index]=max(user.AllPossibleCells(5,:));
         user.CellConnectingTo=user.AllPossibleCells(1:3,index);
+        [CellIds,IndexOfCell]=FindCell(AllCellsArray,user.CellConnectingTo);
+        Temp{IndexOfCell}('NumberOfUsers')=Temp{IndexOfCell}('NumberOfUsers')+1;
+        Temp{IndexOfCell}('UsersIds')=[Temp{IndexOfCell}('UsersIds'),user.Id];
         if(user.CellConnectingTo(3)==-1)
             user.Type=0;
         else

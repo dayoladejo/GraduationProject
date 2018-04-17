@@ -1,4 +1,4 @@
-function OutUsers = FindAllPossibleCells_UserCanConnectTo(AllCellsArray,InUsers,additionPersentage,outer_radius_Macro,outer_radius_Femto)
+function OutUsers = FindAllPossibleCells_UserCanConnectTo(AllCellsArray,InUsers,additionPersentageMacro,additionPersentageFemto,outer_radius_Macro,outer_radius_Femto)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 for i=1:length(InUsers)
@@ -6,9 +6,9 @@ for i=1:length(InUsers)
     for j=1:length(AllCellsArray)
         cell_index=AllCellsArray(:,j);
         if(cell_index(3)==-1)
-            in=InHexagon(cell_index(4),cell_index(5),outer_radius_Macro,user,additionPersentage);
+            in=InHexagon(cell_index(4),cell_index(5),outer_radius_Macro,user,additionPersentageMacro);
         else
-            in=InHexagon(cell_index(4),cell_index(5),outer_radius_Femto,user,additionPersentage);
+            in=InHexagon(cell_index(4),cell_index(5),outer_radius_Femto,user,additionPersentageFemto);
 
         end
         if(in)

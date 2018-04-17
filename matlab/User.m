@@ -13,7 +13,7 @@ classdef User
         AllPossibleCells=[];
         ResourceBlock_Ids_AllPossibleCells=[];
         OtherCells=0;
-        CellConnectingTo=0;
+        CellConnectingTo=[];
         Type=-1;
         SINR=0;
         powerRecived=0;

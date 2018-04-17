@@ -8,11 +8,11 @@ LineWidthpoints=2;
 %% evaluation
 for z=1:length(AllClusters)
     for K=1:length(AllMacroCells)
-        plot(AllMacroCells(K).xaxis+AllClusters(z).xaxis, AllMacroCells(K).yaxis+AllClusters(z).yaxis, 'go', 'MarkerSize', 2, 'LineWidth', LineWidthpoints,'color',AllMacroCells(K).Resources_Block.color), hold on
+        plot(AllMacroCells(K).xaxis+AllClusters(z).xaxis, AllMacroCells(K).yaxis+AllClusters(z).yaxis, '*', 'MarkerSize', 2, 'LineWidth', LineWidthpoints,'color',AllMacroCells(K).Resources_Block.color), hold on
         DrawHexagon(AllMacroCells(K).xaxis+AllClusters(z).xaxis , AllMacroCells(K).yaxis+AllClusters(z).yaxis , AllMacroCells(K).range,AllMacroCells(K).Resources_Block.color,LineWidthCells);
         for i=1:length(AllMacroCells(K).ArrayOfFemtos)
-            plot(AllMacroCells(K).ArrayOfFemtos(i).xaxis+AllClusters(z).xaxis+AllMacroCells(K).xaxis, AllMacroCells(K).ArrayOfFemtos(i).yaxis+AllClusters(z).yaxis+AllMacroCells(K).yaxis, 'go', 'MarkerSize', 2, 'LineWidth', LineWidthpoints,'color',AllMacroCells(K).ArrayOfFemtos(i).Resources_Block.color), hold on
-            DrawHexagon(AllMacroCells(K).ArrayOfFemtos(i).xaxis+AllClusters(z).xaxis+AllMacroCells(K).xaxis , AllMacroCells(K).ArrayOfFemtos(i).yaxis+AllClusters(z).yaxis+AllMacroCells(K).yaxis , AllMacroCells(K).ArrayOfFemtos(i).range,AllMacroCells(K).ArrayOfFemtos(i).Resources_Block.color,LineWidthCells);
+            plot(AllMacroCells(K).ArrayOfFemtos(i).xaxis+AllClusters(z).xaxis+AllMacroCells(K).xaxis, AllMacroCells(K).ArrayOfFemtos(i).yaxis+AllClusters(z).yaxis+AllMacroCells(K).yaxis, 'o', 'MarkerSize', 2, 'LineWidth', LineWidthpoints,'color',AllMacroCells(K).ArrayOfFemtos(i).Resources_Block.color), hold on
+           % DrawHexagon(AllMacroCells(K).ArrayOfFemtos(i).xaxis+AllClusters(z).xaxis+AllMacroCells(K).xaxis , AllMacroCells(K).ArrayOfFemtos(i).yaxis+AllClusters(z).yaxis+AllMacroCells(K).yaxis , AllMacroCells(K).ArrayOfFemtos(i).range,AllMacroCells(K).ArrayOfFemtos(i).Resources_Block.color,LineWidthCells);
         end
     end
 %     plot(AllMacroCells(1).xaxis+AllClusters(z).xaxis, AllMacroCells(1).yaxis+AllClusters(z).yaxis, 'go', 'MarkerSize', 2, 'LineWidth', LineWidthpoints,'color',AllMacroCells(1).Resources_Block.color), hold on
