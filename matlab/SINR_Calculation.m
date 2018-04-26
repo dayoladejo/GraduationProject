@@ -55,15 +55,22 @@ for i=1:length(users)
                 SINR=Pr/(Pi+Cell.TherminalNoise);
             end
             user.AllPossibleCells(5,k)=SINR;
+            user.AllPossibleCells(6,k)=Pr;
         end
-        ComparisonArray=user.AllPossibleCells(5,:);
-        for k=1:length(ComparisonArray)
+        ComparisonArray1=user.AllPossibleCells(5,:);
+        ComparisonArray2=user.AllPossibleCells(6,:);
+        for k=1:length(ComparisonArray1)
              [CellIds,IndexOfCell]=FindCell(AllCellsArray,user.AllPossibleCells(1:3,k));
              NumOfUsersConnecting=Temp{IndexOfCell}('NumberOfUsers');
-             ComparisonArray(k)=ComparisonArray(k)/(NumOfUsersConnecting+1);
+             ComparisonArray1(k)=ComparisonArray1(k)/(NumOfUsersConnecting+1);
+             ComparisonArray2(k)=ComparisonArray2(k)/(NumOfUsersConnecting+1);
         end
+        user.AllPossibleCells(7,:)=(ComparisonArray1-mean(ComparisonArray1))/std(ComparisonArray1);
+        user.AllPossibleCells(8,:)=(ComparisonArray2-mean(ComparisonArray2))/std(ComparisonArray2);
+        user.AllPossibleCells(9,:)=user.AllPossibleCells(8,:)+user.AllPossibleCells(7,:);
+        ComparisonArray=user.AllPossibleCells(9,:);
+        
         [maxval,index]=max(ComparisonArray);
-%         [maxval,index]=max(user.AllPossibleCells(5,:));
         user.CellConnectingTo=user.AllPossibleCells(1:3,index);
         [CellIds,IndexOfCell]=FindCell(AllCellsArray,user.CellConnectingTo);
         Temp{IndexOfCell}('NumberOfUsers')=Temp{IndexOfCell}('NumberOfUsers')+1;
@@ -73,7 +80,7 @@ for i=1:length(users)
         else
             user.Type=1;
         end
-        user.SINR=maxval;
+        user.SINR=user.AllPossibleCells(5,index);
         user.powerRecived=user.AllPossibleCells(4,index);
     end
     users(i)=user;
