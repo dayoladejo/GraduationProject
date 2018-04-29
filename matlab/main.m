@@ -88,7 +88,6 @@ for j=1:length(Users)
         inUsersMore=[inUsersMore,Users(j)];
     end
 end
-DrawTopology(AllClusters,AllMacroCells,Users,AllCellsArray,background);
 
 CellUsersOne=zeros(1,length(AllCellsArray(1,:)));
 for i=1:length(inUsersOne)
@@ -96,10 +95,10 @@ for i=1:length(inUsersOne)
     [res,ind]=FindCell(AllCellsArray,connectedto);
     CellUsersOne(ind)=CellUsersOne(ind)+1;
 end
-
-[geneticsUsers1,resultArray1,initial1,result1,PopulationArrayResult]=SingleObjectiveGeneticsFun(Users,inUsersMore,AllCellsArray,NumberOfPopulation,NumberOfItterations,Probability.matting,Probability.mutation,decimalPoints,MutationPercentage,LoadBalancing,CellUsersOne)%without loadBalancing
-geneticsUsers1=[geneticsUsers1,inUsersOne]
-figure;hold on;
-DrawTopology(AllClusters,AllMacroCells,geneticsUsers1,AllCellsArray,background);
+%  DrawTopology(AllClusters,AllMacroCells,Users,AllCellsArray,background);
+%  [geneticsUsers1,resultArray1,initial1,result1,PopulationArrayResult]=SingleObjectiveGeneticsFun(Users,inUsersMore,AllCellsArray,NumberOfPopulation,NumberOfItterations,Probability.matting,Probability.mutation,decimalPoints,MutationPercentage,LoadBalancing,CellUsersOne)%without loadBalancing
+%  geneticsUsers1=[geneticsUsers1,inUsersOne]
+%  figure;hold on;
+%  DrawTopology(AllClusters,AllMacroCells,geneticsUsers1,AllCellsArray,background);
 
 
