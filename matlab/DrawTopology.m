@@ -1,4 +1,4 @@
-function DrawTopology(AllClusters,AllMacroCells,Users,AllCellsArray)
+function DrawTopology(AllClusters,AllMacroCells,Users,AllCellsArray,background)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 %% conatants:
@@ -20,8 +20,12 @@ for z=1:length(AllClusters)
     
 end
 DrawUsers(Users,AllCellsArray,drawLines);
-grid on, grid minor;
+%grid on, grid minor;
 axis([-inf inf -inf inf]);
 pbaspect([1 1 1]);
+if(background=='w')
+    whitebg
+    set(gcf,'color','w');
+end
 end
 

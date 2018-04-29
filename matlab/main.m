@@ -21,6 +21,16 @@ Number_Of_Femtos=18;
 inner_radius_empty_ratio=0.2;
 additionPersentageFemto=0.5;
 additionPersentageMacro=0.1;
+background='b';
+
+NumberOfPopulation=20;
+Probability.matting=0.8;
+Probability.mutation=0.01;
+NumberOfItterations=20;
+decimalPoints=10;
+MutationPercentage=0.1;
+LoadBalancing=0;
+
 
 %% pre-calculations
 color=[];
@@ -47,6 +57,15 @@ end
 Users=AddAllUsers(Number_Of_Users,-2000,12000);
 [AllClusters,AllMacroCells,AllCellsArray]=SetUpClusters(outer_radius_Macro,I,J,color,NumberOfClusters,Frequency_Range,Channel_Bandwidth,X,Y,Number_Of_Femtos,outer_radius_Femto,overLap_femto,inner_radius_empty_ratio);
 Users=FindAllPossibleCells_UserCanConnectTo(AllCellsArray,Users,additionPersentageMacro,additionPersentageFemto,outer_radius_Macro,outer_radius_Femto);
+inUsers={};
+inUsersOne={};
+inUsersMore={};
+for j=1:length(Users)
+    if (~isempty(Users(j).AllPossibleCells))
+        inUsers=[inUsers,Users(j)];
+    end
+end
+Users=inUsers;
 [Users,Temp]=SINR_Calculation(Users,AllCellsArray);
 MacroBaseStationUsers=0;
 FemtoBaseStationUsers=0;
@@ -54,11 +73,33 @@ for i=1:length(Temp)
     if(~isempty(Temp{i}('UsersIds')))
         %Temp{i}('UsersIds')
         if(AllCellsArray(3,i)==-1)
-        MacroBaseStationUsers=MacroBaseStationUsers+Temp{i}('NumberOfUsers');
+            MacroBaseStationUsers=MacroBaseStationUsers+Temp{i}('NumberOfUsers');
         else
-        FemtoBaseStationUsers=FemtoBaseStationUsers+Temp{i}('NumberOfUsers');
+            FemtoBaseStationUsers=FemtoBaseStationUsers+Temp{i}('NumberOfUsers');
         end
     end
 end
 
-DrawTopology(AllClusters,AllMacroCells,Users,AllCellsArray);
+for j=1:length(Users)
+    if(length(Users(j).AllPossibleCells(1,:))==1)
+        inUsersOne=[inUsersOne,Users(j)];
+    end
+    if(length(Users(j).AllPossibleCells(1,:))>1)
+        inUsersMore=[inUsersMore,Users(j)];
+    end
+end
+DrawTopology(AllClusters,AllMacroCells,Users,AllCellsArray,background);
+
+CellUsersOne=zeros(1,length(AllCellsArray(1,:)));
+for i=1:length(inUsersOne)
+    connectedto=inUsersOne(i).CellConnectingTo;
+    [res,ind]=FindCell(AllCellsArray,connectedto);
+    CellUsersOne(ind)=CellUsersOne(ind)+1;
+end
+
+[geneticsUsers1,resultArray1,initial1,result1,PopulationArrayResult]=SingleObjectiveGeneticsFun(Users,inUsersMore,AllCellsArray,NumberOfPopulation,NumberOfItterations,Probability.matting,Probability.mutation,decimalPoints,MutationPercentage,LoadBalancing,CellUsersOne)%without loadBalancing
+geneticsUsers1=[geneticsUsers1,inUsersOne]
+figure;hold on;
+DrawTopology(AllClusters,AllMacroCells,geneticsUsers1,AllCellsArray,background);
+
+
