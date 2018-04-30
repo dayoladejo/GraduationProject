@@ -66,8 +66,12 @@ for i=1:length(users)
              ComparisonArray2(k)=ComparisonArray2(k)/(NumOfUsersConnecting+1);
         end
         user.AllPossibleCells(7,:)=(ComparisonArray1-mean(ComparisonArray1))/std(ComparisonArray1);
+        user.AllPossibleCells(7,:)=(user.AllPossibleCells(7,:)/6)+0.5;
         user.AllPossibleCells(8,:)=(ComparisonArray2-mean(ComparisonArray2))/std(ComparisonArray2);
-        user.AllPossibleCells(9,:)=user.AllPossibleCells(8,:)+user.AllPossibleCells(7,:);
+        user.AllPossibleCells(8,:)=(user.AllPossibleCells(8,:)/6)+0.5;
+        %user.AllPossibleCells(7,:)=(ComparisonArray1-min(ComparisonArray1))/(max(ComparisonArray1)-min(ComparisonArray1));
+        %user.AllPossibleCells(8,:)=(ComparisonArray2-min(ComparisonArray2))/(max(ComparisonArray2)-min(ComparisonArray2));
+        user.AllPossibleCells(9,:)=(user.AllPossibleCells(8,:)+user.AllPossibleCells(7,:));
         ComparisonArray=user.AllPossibleCells(9,:);
         
         [maxval,index]=max(ComparisonArray);

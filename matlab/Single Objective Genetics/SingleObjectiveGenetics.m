@@ -1,23 +1,14 @@
-function [geneticsUsers,resultArray,initial,result,PopulationArrayResult] = SingleObjectiveGeneticsFun(Users,inUsersMore,AllCellsArray,NumberOfPopulation,NumberOfItterations,mattingProbability,mutationProbability,decimalPoints,MutationPercentage,LoadBalancing,CellUsersOne)
+NumberOfPopulation=20;
+Probability.matting=0.8;
+Probability.mutation=0.01;
+NumberOfItterations=20;
+decimalPoints=10;
+MutationPercentage=0.1;
+LoadBalancing=0;
+
 geneticsUsers=inUsersMore;
 PopulationArray=[];
 Number_Of_genes=0;
-if nargin==11
-    Probability.matting=mattingProbability;
-    Probability.mutation=mutationProbability;
-    Number_Of_genes=0;
-    NumberOfItterations=20;
-elseif nargin==3
-    NumberOfPopulation=20;
-    Probability.matting=0.8;
-    Probability.mutation=0.01;
-    NumberOfItterations=20;
-    decimalPoints=10;
-    MutationPercentage=0.1;
-    LoadBalancing=0;
-else
-    error("inputs are not correct");
-end
 
 for k=1:NumberOfPopulation
     NewUsersArray=[];
@@ -217,7 +208,7 @@ result=vpa(PopulationArray1(NumberOfItterations,:))
 [res,ind]=max(result);
 initial=vpa(PopulationArray1(1,:))
 resultArray=PopulationArray{1,ind};
-PopulationArrayResult=PopulationArray1;
+
 for i=1:length(geneticsUsers)
     index=find(resultArray(i).binary,1);
     geneticsUsers(i).CellConnectingTo=resultArray(i).cell(1:3,index);
@@ -226,4 +217,3 @@ for i=1:length(geneticsUsers)
 end
 
 
-end
