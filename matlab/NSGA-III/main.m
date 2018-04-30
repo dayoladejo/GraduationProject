@@ -9,7 +9,7 @@ decimalPoints=10;
 MutationPercentage=0.1;
 LoadBalancing=0;
 
-geneticsUsers=inUsersMore;
+geneticsUsersNSGAIII=inUsersMore;
 Pop=[];
 Number_Of_genes=0;
 %% NSGA-II Parameters
@@ -106,7 +106,6 @@ for it=1:min([NumberOfItterations,10])
     
     % Plot F1 Costs
     figure;hold on;
-    figure(1);
     PlotCosts(F1);
     pause(0.01);
     
@@ -114,15 +113,16 @@ for it=1:min([NumberOfItterations,10])
 end
 %% final result
 
-resultArray=F1(1).Genes;
-for i=1:length(geneticsUsers)
-    index=find(resultArray(i).binary,1);
-    geneticsUsers(i).CellConnectingTo=resultArray(i).cell(1:3,index);
-    geneticsUsers(i).SINR=resultArray(i).cell(5,index);
-    geneticsUsers(i).powerRecived=resultArray(i).cell(6,index);
+resultArrayNSGAIII=F1(1).Genes;
+for i=1:length(geneticsUsersNSGAIII)
+    index=find(resultArrayNSGAIII(i).binary,1);
+    geneticsUsersNSGAIII(i).CellConnectingTo=resultArrayNSGAIII(i).cell(1:3,index);
+    geneticsUsersNSGAIII(i).SINR=resultArrayNSGAIII(i).cell(5,index);
+    geneticsUsersNSGAIII(i).powerRecived=resultArrayNSGAIII(i).cell(6,index);
 end
-geneticsUsers1=[geneticsUsers,inUsersOne];
+geneticsUsersNSGAIII=[geneticsUsersNSGAIII,inUsersOne];
 figure;hold on;
-DrawTopology(AllClusters,AllMacroCells,geneticsUsers1,AllCellsArray,background);
+DrawTopology(AllClusters,AllMacroCells,geneticsUsersNSGAIII,AllCellsArray,background);
 set(gca,'Color','k');
+
 

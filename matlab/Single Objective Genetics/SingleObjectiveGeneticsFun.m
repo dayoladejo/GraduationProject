@@ -107,7 +107,7 @@ for jj=1:NumberOfItterations
     PopulationArray1(jj,:)=[PopulationArray{2,:}]*(0.8+reminder/(NumberOfItterations*10));
     end
    % %cross over
-   CrossOverArray=crossover(NumberOfPopulation,Number_Of_genes,PopulationArray)
+   CrossOverArray=crossover(NumberOfPopulation,Number_Of_genes,PopulationArray);
    % %end of cross over
    
     % %mutation
